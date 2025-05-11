@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedFiles = document.getElementById('selected-files');
     const sendFilesBtn = document.getElementById('send-files-btn');
     
+    // Create notification container
+    const notificationContainer = document.createElement('div');
+    notificationContainer.id = 'notification-container';
+    document.body.appendChild(notificationContainer);
+    
     let files = [];
     
     connectBtn.addEventListener('click', connectToSession);
@@ -46,6 +51,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Function to show notifications
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        notificationContainer.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Hide and remove notification after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+    
     function handleFileSelection(event) {
         const fileList = event.target.files;
         files = [];
@@ -56,11 +83,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (fileList.length > 0) {
             for (let i = 0; i < fileList.length; i++) {
                 const file = fileList[i];
-                files.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
+                
+                // Read file content
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Store file with content
+                    files.push({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        content: e.target.result
+                    });
+                    
+                    // Enable send button if all files are read
+                    if (files.length === fileList.length) {
+                        sendFilesBtn.disabled = false;
+                    }
+                };
+                reader.readAsDataURL(file);
                 
                 // Create file item display
                 const fileItem = document.createElement('div');
@@ -109,18 +149,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             if (data.success) {
-                sendFilesBtn.textContent = 'Files Sent Successfully!';
-                setTimeout(() => {
-                    sendFilesBtn.textContent = 'Send Files';
-                    sendFilesBtn.disabled = false;
-                }, 3000);
+                showNotification('Files sent successfully!', 'success');
+                sendFilesBtn.textContent = 'Send Files';
+                sendFilesBtn.disabled = false;
             } else {
-                sendFilesBtn.textContent = 'Failed to Send';
+                showNotification('Failed to send files: ' + (data.error || 'Unknown error'), 'error');
                 sendFilesBtn.disabled = false;
             }
         } catch (error) {
             console.error('Error sending files:', error);
-            sendFilesBtn.textContent = 'Error Sending Files';
+            showNotification('Error sending files. Please try again.', 'error');
             sendFilesBtn.disabled = false;
         }
     }

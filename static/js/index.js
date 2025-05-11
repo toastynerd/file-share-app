@@ -7,11 +7,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const viewSessionBtn = document.getElementById('view-session-btn');
     const qrcodeContainer = document.getElementById('qrcode');
     
+    // Create notification container
+    const notificationContainer = document.createElement('div');
+    notificationContainer.id = 'notification-container';
+    document.body.appendChild(notificationContainer);
+    
     let sessionId = null;
     let statusCheckInterval = null;
     
     createSessionBtn.addEventListener('click', createSession);
     copyUrlBtn.addEventListener('click', copySessionUrl);
+    // Function to show notifications
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        notificationContainer.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Hide and remove notification after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
     
     async function createSession() {
         try {
@@ -50,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
         } catch (error) {
             console.error('Error creating session:', error);
-            alert('Failed to create session. Please try again.');
+            showNotification('Failed to create session. Please try again.', 'error');
         }
     }
     
@@ -59,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.execCommand('copy');
         
         // Visual feedback
+        showNotification('URL copied to clipboard!', 'success');
         copyUrlBtn.textContent = 'Copied!';
         setTimeout(() => {
             copyUrlBtn.textContent = 'Copy';

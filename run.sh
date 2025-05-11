@@ -16,6 +16,8 @@ pip install -r requirements.txt
 
 # Run the application
 echo "Starting application..."
+# Check if port 5001 is in use and kill the process if needed
+lsof -ti:5001 | xargs kill -9 2>/dev/null || true
 python app.py
 
 # Deactivate virtual environment when the app exits

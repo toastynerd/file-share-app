@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Transfer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phone Transfer</h1>
+        <p>Transfer files from your phone to this device through the browser</p>
+        
+        <div class="card">
+            <h2>Create a new session</h2>
+            <p>Start a new session to transfer files from your phone</p>
+            <button id="create-session-btn" class="btn primary">Create Session</button>
+        </div>
+
+        <div id="session-info" class="hidden">
+            <h2>Session Created!</h2>
+            <p>Use your phone to connect to this session by scanning the QR code or visiting the URL below:</p>
+            
+            <div id="qrcode"></div>
+            
+            <div class="session-url-container">
+                <input type="text" id="session-url" readonly>
+                <button id="copy-url-btn" class="btn">Copy</button>
+            </div>
+            
+            <p>Status: <span id="connection-status">Waiting for connection...</span></p>
+            
+            <button id="view-session-btn" class="btn primary hidden">View Session</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

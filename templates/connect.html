@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect - Phone Transfer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phone Transfer</h1>
+        <p>Session ID: <span id="session-id">{{ session_id }}</span></p>
+        
+        <div id="connection-container">
+            <button id="connect-btn" class="btn primary">Connect to Session</button>
+            <p id="connection-status"></p>
+        </div>
+        
+        <div id="file-browser" class="hidden">
+            <h2>Select Files to Transfer</h2>
+            <input type="file" id="file-input" multiple>
+            <div id="selected-files" class="file-list"></div>
+            <button id="send-files-btn" class="btn primary" disabled>Send Files</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/connect.js') }}"></script>
+</body>
+</html>

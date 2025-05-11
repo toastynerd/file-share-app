@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session - Phone Transfer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phone Transfer Session</h1>
+        <p>Session ID: <span id="session-id">{{ session_id }}</span></p>
+        
+        <div id="connection-status-container">
+            <p>Status: <span id="connection-status">Checking...</span></p>
+        </div>
+        
+        <div id="files-container" class="hidden">
+            <h2>Files from Phone</h2>
+            <div id="file-list" class="file-list">
+                <p id="no-files-message">No files available yet</p>
+            </div>
+        </div>
+        
+        <a href="/" class="btn">Back to Home</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/session.js') }}"></script>
+</body>
+</html>

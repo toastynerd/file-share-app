@@ -11,6 +11,7 @@ source venv/bin/activate
 
 # Install dependencies
 echo "Installing dependencies..."
+pip uninstall -y Flask Werkzeug Jinja2 itsdangerous click
 pip install -r requirements.txt
 
 # Run the application

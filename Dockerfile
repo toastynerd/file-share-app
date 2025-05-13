@@ -15,6 +15,8 @@ EXPOSE 5001
 # Set environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=5001
 
 # Run the application with explicit host and port binding
-CMD ["python", "-c", "import os; from app import app; app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5001)), debug=False)"]
+CMD ["python", "app.py"]

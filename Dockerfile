@@ -19,4 +19,4 @@ ENV HOST=0.0.0.0
 ENV PORT=5001
 
 # Run the application with explicit host and port binding
-CMD ["python", "app.py"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5001"]

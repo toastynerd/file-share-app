@@ -4,10 +4,15 @@ import uuid
 import json
 import base64
 import io
+import logging
 from datetime import datetime
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = 'your-secret-key-here'  # Fixed secret key for container restarts
 
 # Store active sessions
 active_sessions = {}
@@ -127,4 +132,9 @@ if __name__ == '__main__':
     # In production, set debug to False
     debug_mode = os.environ.get('FLASK_ENV') == 'development'
     port = int(os.environ.get('PORT', 5001))
-    app.run(host='0.0.0.0', port=port, debug=debug_mode)
+    host = os.environ.get('HOST', '0.0.0.0')
+    
+    logger.info(f"Starting Flask app on {host}:{port} (debug={debug_mode})")
+    logger.info(f"Active sessions: {active_sessions}")
+    
+    app.run(host=host, port=port, debug=debug_mode)

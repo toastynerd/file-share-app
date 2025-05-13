@@ -126,4 +126,5 @@ def download_file(session_id, file_index):
 if __name__ == '__main__':
     # In production, set debug to False
     debug_mode = os.environ.get('FLASK_ENV') == 'development'
-    app.run(host='0.0.0.0', port=5001, debug=debug_mode)
+    port = int(os.environ.get('PORT', 5001))
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)

@@ -1,1 +1,5 @@
 .aider*
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars

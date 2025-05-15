@@ -79,7 +79,7 @@ You can modify the following variables in `variables.tf` to customize the deploy
 - `aws_region`: AWS region to deploy resources (default: us-west-2)
 - `app_name`: Name of the application (default: quickshare)
 - `app_port`: Port the application listens on (default: 5001)
-- `app_count`: Number of application containers to run (default: 1)
+- `app_count`: Initial number of application containers to run (default: 0, auto-scales based on traffic)
 - `fargate_cpu`: CPU units for Fargate tasks (default: 256)
 - `fargate_memory`: Memory for Fargate tasks (default: 512)
 - `vpc_cidr`: CIDR block for the VPC (default: 10.0.0.0/16)

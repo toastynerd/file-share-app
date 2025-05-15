@@ -19,7 +19,7 @@ variable "app_port" {
 variable "app_count" {
   description = "Number of application containers to run"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "fargate_cpu" {
